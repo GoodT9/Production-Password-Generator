@@ -21,7 +21,7 @@ public class Generator {
      * displaying password security information, and quitting the program.
      */
     public void mainLoop() {
-        System.out.println("Welcome to Good Password Services. How can we be of service today?? :)");
+        System.out.println("Welcome to the Thunderdome, baby. How can we be of service today?? :)");
         printMenu();
 
         String userOption = "-1";
@@ -55,13 +55,7 @@ public class Generator {
 
 
 
-    /**
-     * Generates a password based on the specified length and the current alphabet configuration.
-     * 
-     * @param length The desired length of the password. Must be greater than 0.
-     * @return A Password object containing the generated password string.
-     * @throws IllegalArgumentException if the specified length is less than 1.
-     */
+
     private Password GeneratePassword(int length) {
         if (length < 1) {
             throw new IllegalArgumentException("Password length must be at least 1");
@@ -102,6 +96,7 @@ public void printUsefulInfo() {
     System.out.println("15. Set up security questions with answers that are not easily guessable or found on social media");
     System.out.println("16. If you suspect your password has been compromised, contact your IT support team immediately");
 }
+
 
 
 
