@@ -9,24 +9,7 @@ public class Password {
     }
 
 
-    /**
-     * Calculates the entropy of the password.
-     * 
-     * This method computes the entropy of the password based on its length and the
-     * character types used. It considers uppercase letters, lowercase letters,
-     * digits, and special symbols. The entropy is calculated using the formula:
-     * entropy = passwordLength * log2(poolSize)
-     * 
-     * The pool size is determined by the types of characters present in the password:
-     * - Uppercase letters contribute 26 to the pool size
-     * - Lowercase letters contribute 26 to the pool size
-     * - Digits contribute 10 to the pool size
-     * - Special symbols contribute 32 to the pool size
-     * 
-     * @return The calculated entropy of the password as a double value.
-     *         Higher entropy indicates a stronger password.
-     * @since 1.0.0
-     */
+
     public double calculateEntropy() {
         double entropy = 0;
         int passwordLength = Value.length();
@@ -41,19 +24,6 @@ public class Password {
         return entropy;
     }
 
-
-
-
-    /**
- * Determines the type of a character in a password.
- *
- * @param C The character to be evaluated.
- * @return An integer representing the type of the character:
- *         1 - Uppercase letter
- *         2 - Lowercase letter
- *         3 - Digit
- *         4 - Symbol
- */
 
 public int CharType(char C) {
     int val;
@@ -80,21 +50,22 @@ public int CharType(char C) {
     return val;
 }
 
+
     /**
-     * Calculates the strength of the password based on various criteria.
+     * Evaluates the strength of the password based on character composition and length.
      * 
-     * This method evaluates the password strength by checking for the presence of:
-     * - Uppercase letters
-     * - Lowercase letters
-     * - Numbers
-     * - Symbols
-     * It also considers the length of the password.
+     * This method analyzes the password and assigns a score based on the following criteria:
+     * - Presence of uppercase letters (+1 point)
+     * - Presence of lowercase letters (+1 point)
+     * - Presence of numeric digits (+1 point)
+     * - Presence of special symbols (+1 point)
+     * - Password length of at least 8 characters (+1 point)
+     * - Password length of at least 16 characters (+1 point)
      * 
-     * @return An integer score representing the password strength:
-     *         - 1 point for each: uppercase, lowercase, number, and symbol used
-     *         - 1 point if length is 8 or more
-     *         - 1 additional point if length is 16 or more
-     *         The maximum possible score is 6.
+     * The maximum possible score is 6, indicating a very strong password that meets
+     * all the above criteria.
+     *
+     * @return An integer score between 0 and 6, where higher values indicate stronger passwords
      */
     public int PasswordStrength() {
         String s = this.Value;
@@ -104,41 +75,31 @@ public int CharType(char C) {
         boolean UsedSym = false;
         int type;
         int Score = 0;
-
+    
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             type = CharType(c);
-
+    
             if (type == 1) UsedUpper = true;
             if (type == 2) UsedLower = true;
             if (type == 3) UsedNum = true;
             if (type == 4) UsedSym = true;
         }
-
+    
         if (UsedUpper) Score += 1;
         if (UsedLower) Score += 1;
         if (UsedNum) Score += 1;
         if (UsedSym) Score += 1;
-
+    
         if (s.length() >= 8) Score += 1;
         if (s.length() >= 16) Score += 1;
-
+    
         return Score;
     }
 
 
-    /**
-     * Calculates and returns a detailed score for the password, including visualization,
-     * entropy information, and a descriptive message about the password strength.
-     *
-     * This method combines the results of password strength calculation, entropy calculation,
-     * and strength visualization to provide a comprehensive assessment of the password.
-     *
-     * @return A String containing the password strength visualization, entropy information,
-     *         and a descriptive message about the password strength. The message varies
-     *         based on the calculated entropy value, providing feedback on whether the
-     *         password is considered weak, moderate, strong, or very strong.
-     */
+
+
     public String calculateScore() {
         int Score = this.PasswordStrength();
         double entropy = this.calculateEntropy();
@@ -161,23 +122,25 @@ public int CharType(char C) {
 
 
 /**
- * Visualizes the strength of the password based on its entropy.
+ * Creates a visual representation of the password strength based on entropy.
  * 
- * This method creates a visual representation of the password strength
- * using a bar of filled and unfilled characters, along with a textual
- * description of the strength level.
+ * This method generates a string that visually represents the password strength
+ * using a bar visualization and a descriptive label. The visualization consists of:
+ * - A progress bar with filled (█) and empty (░) blocks scaled based on entropy
+ * - A textual label categorizing the password as "Weak", "Medium", "Strong", or "Very Strong"
  * 
- * @example
- * ```java
- * Password password = new Password("MyStr0ngP@ssw0rd");
- * String visualization = password.visualizePasswordStrength();
- * System.out.println(visualization);
- * // Output: [████░░] Strong
- * ```
+ * The strength categorization follows these entropy thresholds:
+ * - Less than 40 bits: Weak
+ * - 40-59 bits: Medium
+ * - 60-79 bits: Strong
+ * - 80+ bits: Very Strong
  * 
- * @returns {String} A string containing a visual bar representation and
- *                   a textual description of the password strength.
- * @version 1.0.0
+ * The visual bar scales the entropy value (dividing by 20) to determine how many
+ * of the 6 possible blocks should be filled.
+ *
+ * @return A formatted string containing the visual representation of password strength
+ *         in the format "[████░░] Strong" (example)
+ * @see calculateEntropy()
  * @since 1.0.0
  */
 public String visualizePasswordStrength() {
@@ -207,6 +170,7 @@ public String visualizePasswordStrength() {
 
     return visualization.toString();
 }
+
 
 
 

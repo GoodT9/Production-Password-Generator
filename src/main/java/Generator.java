@@ -11,14 +11,22 @@ public class Generator {
     public Generator(boolean IncludeUpper, boolean IncludeLower, boolean IncludeNum, boolean IncludeSym) {
         alphabet = new Alphabet(IncludeUpper, IncludeLower, IncludeNum, IncludeSym);
     }
-   
-
     /**
      * Executes the main loop of the password generator and checker program.
      * This method displays a welcome message, presents a menu of options to the user,
-     * and processes user input until the user chooses to quit the program.
-     * It handles options for generating a password, checking password strength,
-     * displaying password security information, and quitting the program.
+     * and continuously processes user input until the user chooses to quit.
+     * 
+     * The loop handles the following options:
+     * 1. Generate a new password
+     * 2. Check password strength
+     * 3. Display password security information
+     * 4. Quit the program
+     * 
+     * After each operation (except quitting), the menu is reprinted for the next selection.
+     * If an invalid option is entered, an error message is displayed and the menu is reprinted.
+     * 
+     * This method does not take any parameters and does not return any value.
+     * It relies on class-level variables and methods to handle user input and perform operations.
      */
     public void mainLoop() {
         System.out.println("Welcome to the Thunderdome, baby. How can we be of service today?? :)");
@@ -56,6 +64,22 @@ public class Generator {
 
 
 
+
+
+    /**
+     * Generates a random password based on the specified length and the current alphabet configuration.
+     *
+     * This method creates a password by randomly selecting characters from the alphabet
+     * defined in the Generator class. The selection process ensures an even distribution
+     * of characters across the entire alphabet range.
+     *
+     * @param   length    The desired length of the password. Must be greater than 0.
+     * @return            A new Password object containing the generated password string.
+     * @throws  IllegalArgumentException    If the specified length is less than 1.
+     * @see     Alphabet
+     * @see     Password
+     * @since   1.0.0
+     */
     private Password GeneratePassword(int length) {
         if (length < 1) {
             throw new IllegalArgumentException("Password length must be at least 1");
@@ -76,6 +100,26 @@ public class Generator {
         return new Password(pass.toString());
     }
 
+
+
+
+/**
+ * Displays a comprehensive list of password security tips to the user.
+ *
+ * This method prints a series of best practices and guidelines for creating
+ * and managing secure passwords. The tips cover various aspects of password
+ * security, including length, complexity, uniqueness, and general security
+ * practices.
+ *
+ * The information is presented in a numbered list format, making it easy
+ * for users to read and remember. Each tip is printed on a new line for
+ * better readability.
+ *
+ * Usage note: This method is typically called when the user selects the
+ * option to view password security information from the main menu.
+ *
+ * @since 1.0.0
+ */
 public void printUsefulInfo() {
     System.out.println("\n=== Password Security Tips ===");
     System.out.println("1. Use a minimum password length of 8 or more characters if permitted");
@@ -88,14 +132,15 @@ public void printUsefulInfo() {
     System.out.println("8. Use a unique password for each of your important accounts");
     System.out.println("9. Use a password manager to generate and store complex passwords securely");
     System.out.println("10. Enable two-factor authentication (2FA) whenever possible for additional security");
-
     System.out.println("11. Regularly update your passwords, especially if you suspect they might have been compromised");
     System.out.println("12. Avoid sharing your passwords with others, even if they claim to be from IT support");
     System.out.println("13. Do not use the same password for multiple accounts if the accounts are not related to each other");
     System.out.println("14. Consider using passphrases: long sequences of random words that are easy to remember but hard to crack");
     System.out.println("15. Set up security questions with answers that are not easily guessable or found on social media");
     System.out.println("16. If you suspect your password has been compromised, contact your IT support team immediately");
+    System.out.println("==============================");
 }
+
 
 
 
@@ -108,7 +153,7 @@ public void printUsefulInfo() {
 
         boolean correctParams;
 
-        System.out.println("Enter the desired password length:");
+        System.out.println("Let's get started. Enter the desired password length:");
 
         do {
             String input;
