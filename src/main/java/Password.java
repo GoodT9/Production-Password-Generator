@@ -51,22 +51,6 @@ public int CharType(char C) {
 }
 
 
-    /**
-     * Evaluates the strength of the password based on character composition and length.
-     * 
-     * This method analyzes the password and assigns a score based on the following criteria:
-     * - Presence of uppercase letters (+1 point)
-     * - Presence of lowercase letters (+1 point)
-     * - Presence of numeric digits (+1 point)
-     * - Presence of special symbols (+1 point)
-     * - Password length of at least 8 characters (+1 point)
-     * - Password length of at least 16 characters (+1 point)
-     * 
-     * The maximum possible score is 6, indicating a very strong password that meets
-     * all the above criteria.
-     *
-     * @return An integer score between 0 and 6, where higher values indicate stronger passwords
-     */
     public int PasswordStrength() {
         String s = this.Value;
         boolean UsedUpper = false;
@@ -75,25 +59,25 @@ public int CharType(char C) {
         boolean UsedSym = false;
         int type;
         int Score = 0;
-    
+
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             type = CharType(c);
-    
+
             if (type == 1) UsedUpper = true;
             if (type == 2) UsedLower = true;
             if (type == 3) UsedNum = true;
             if (type == 4) UsedSym = true;
         }
-    
+
         if (UsedUpper) Score += 1;
         if (UsedLower) Score += 1;
         if (UsedNum) Score += 1;
         if (UsedSym) Score += 1;
-    
+
         if (s.length() >= 8) Score += 1;
         if (s.length() >= 16) Score += 1;
-    
+
         return Score;
     }
 
